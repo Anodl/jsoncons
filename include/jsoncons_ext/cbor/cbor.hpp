@@ -19,31 +19,32 @@
 #include <jsoncons/json.hpp>
 #include <jsoncons_ext/binary/binary_utilities.hpp>
 #include <jsoncons_ext/cbor/cbor_view.hpp>
+#include <jsoncons_ext/cbor/cbor_encoder.hpp>
 
 namespace jsoncons { namespace cbor {
 
-class packed_cbor : public cbor_view
+class cbor_packed : public cbor_view
 {
     std::vector<uint8_t> data_;
 public:
 
-    packed_cbor() = default;
-    packed_cbor(const packed_cbor& val)
+    cbor_packed() = default;
+    cbor_packed(const cbor_packed& val)
         : data_(val.data_)
     {
         this->set_data(data_.data(),data_.size());
     }
-    packed_cbor(packed_cbor&& val)
+    cbor_packed(cbor_packed&& val)
         : data_(std::move(val.data_))
     {
         this->set_data(data_.data(),data_.size());
     }
-    packed_cbor(const std::vector<uint8_t>& val)
+    cbor_packed(const std::vector<uint8_t>& val)
         : data_(val)
     {
         this->set_data(data_.data(),data_.size());
     }
-    packed_cbor(std::vector<uint8_t>&& val)
+    cbor_packed(std::vector<uint8_t>&& val)
         : data_(val)
     {
         this->set_data(data_.data(),data_.size());

@@ -20,10 +20,11 @@
 #include <jsoncons/jsoncons_utilities.hpp>
 #include <jsoncons/json_output_handler.hpp>
 #include <jsoncons/detail/writer.hpp>
+#include <jsoncons_ext/cbor/cbor_view.hpp>
 
-namespace jsoncons { cbor {
+namespace jsoncons { namespace cbor {
 
-template<class CharT,class Writer=detail::ostream_buffered_writer<CharT>>
+template<class CharT,class Writer=jsoncons::detail::ostream_buffered_writer<uint8_t>>
 class basic_cbor_encoder final : public basic_json_output_handler<CharT>
 {
 public:
@@ -165,7 +166,7 @@ private:
             begin_scalar_value();
         }
 
-        auto buf = detail::null_literal<CharT>();
+        auto buf = jsoncons::detail::null_literal<CharT>();
         writer_.write(buf, 4);
 
         end_value();
@@ -276,8 +277,8 @@ private:
     }
 };
 
-typedef basic_cbor_encoder<char,detail::ostream_buffered_writer<char>> cbor_encoder;
-typedef basic_cbor_encoder<wchar_t, detail::ostream_buffered_writer<wchar_t>> wcbor_encoder;
+typedef basic_cbor_encoder<char,jsoncons::detail::ostream_buffered_writer<char>> cbor_encoder;
+typedef basic_cbor_encoder<wchar_t, jsoncons::detail::ostream_buffered_writer<wchar_t>> wcbor_encoder;
 
 }}
 #endif
